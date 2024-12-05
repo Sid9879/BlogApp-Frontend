@@ -118,7 +118,7 @@ const handleCoverChanger = (e)=>{
      }
     };
 
-}
+
 
   // const handleProfileChanger = (e) => {
   //   let file = e.target.files[0];
@@ -147,21 +147,21 @@ const handleCoverChanger = (e)=>{
   //   };
   // };
 
-const handleProfileChanger =()=>{
-  let files = e.target.files[0];
-  let formData = new FormData();
-  formData.append('upload_preset','BlogApp')
-  let res1 = axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,files)
-  let data = res1.data;
-  if(data.success){
-    toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
+// const handleProfileChanger =()=>{
+//   let files = e.target.files[0];
+//   let formData = new FormData();
+//   formData.append('upload_preset','BlogApp')
+//   let res1 = axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,files)
+//   let data = res1.data;
+//   if(data.success){
+//     toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
 
-  }
-  else{
-    toast.error(res1.data.msg, { position: "top-center", theme: "dark"})
-  }
+//   }
+//   else{
+//     toast.error(res1.data.msg, { position: "top-center", theme: "dark"})
+//   }
 
-}
+// }
 
   //show total likes of user
   const [countLikes, setcountLikes] = useState("");
@@ -429,6 +429,6 @@ const handleProfileChanger =()=>{
       )}
     </div>
   );
-
+}
 
 export default Profile;
