@@ -7,7 +7,7 @@ import { ClipLoader } from 'react-spinners';
 const CreatePost = (props) => {
   //post create part code...............//
   let userStore = useSelector((state)=>state.user)
-console.log(userStore)
+// console.log(userStore)
 
 const [post, setpost] = useState(false); // for show create post tab
 

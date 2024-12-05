@@ -11,7 +11,7 @@ import UserProfileCard from "../Component/UserProfileCard";
 
 const Profile = (props) => {
   let userStore = useSelector((state) => state.user);
-  console.log(userStore);
+  // console.log(userStore);
 
   let followers = userStore.user.followers;
   // console.log(followers)

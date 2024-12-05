@@ -14,7 +14,7 @@ const Home = () => {
 // console.log(userStore)
 
 const [selectedPost,setselectedPost ] = useState(false);
-console.log(selectedPost)
+// console.log(selectedPost)
 const [selectedIndex, setselectedIndex] = useState(null);
 const commentClicked = (obj,i)=>{
   // console.log(obj)
