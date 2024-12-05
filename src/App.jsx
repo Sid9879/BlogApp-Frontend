@@ -16,10 +16,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Profile from './pages/Profile'
 import FriendProfile from './pages/FriendProfile'
 import Chat from './pages/Chat'
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-// import EmojiPicker from 'emoji-picker-react';
-// import UserProfileCard from './Component/UserProfileCard'
+
 
 
 

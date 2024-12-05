@@ -100,7 +100,7 @@ const Profile = (props) => {
     };
 
     reader.onerror = () => {
-      console.log(reader.error);
+      // console.log(reader.error);
     };
   };
 
@@ -111,7 +111,7 @@ const Profile = (props) => {
     reader.readAsDataURL(file);
 
     reader.onloadend = async () => {
-      console.log(reader.result);
+      // console.log(reader.result);
       setuserPics({ ...userPics, profilePic: reader.result });
 
       let res = await axios.put(
@@ -127,7 +127,7 @@ const Profile = (props) => {
       }
     };
     reader.onerror = () => {
-      console.log(reader.error);
+      // console.log(reader.error);
     };
   };
 

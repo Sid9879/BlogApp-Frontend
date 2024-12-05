@@ -14,7 +14,7 @@ const ForgetPassword = () => {
 
     email:emailRef.current.value=''
     let data = res.data
-    console.log(data)
+    // console.log(data)
     if(data.msg){
       toast.success(data.msg,{position:"top-center",theme:"dark"})
     }

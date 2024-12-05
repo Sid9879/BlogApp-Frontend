@@ -136,7 +136,7 @@ return res1
 })
 
 let StringArr = await Promise.all(arr).then((ans)=>ans)
-console.log(StringArr) //[string,string] data
+// console.log(StringArr) //[string,string] data
 
 let finalArr = StringArr.map((item)=>{
   let obj = {};
@@ -160,7 +160,7 @@ let res = await axios.post('https://blogapp-anlu.onrender.com/posts/create',fina
   }
 });
 let data = res.data
-console.log(data)
+// console.log(data)
 if(data.success===true){
   setformDetails({
     title:'',

@@ -31,7 +31,7 @@ const Signup = () => {
     }
     else{
       toast.error(res.data.msg,{position:"top-center",theme:"dark"})
-      console.log(res.data.msg)
+      // console.log(res.data.msg)
     }
     
   }

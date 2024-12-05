@@ -52,8 +52,7 @@ const FriendProfile = (props) => {
     autoplay: true,          // Autoplay the slider
     autoplaySpeed: 3000,     // Autoplay speed (3 seconds)
   };
-  // const [followersList, setfollowersList] = useState('');
-  // console.log(followersList)
+ 
 
   const handleFollow =async ()=>{
     let res = await axios.get(`https://blogapp-anlu.onrender.com/users/follow/${userId}`,{

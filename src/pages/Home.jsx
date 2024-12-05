@@ -11,13 +11,15 @@ import { Button, Modal } from 'antd';
 
 const Home = () => {
   let userStore = useSelector((state)=>state.user)
-console.log(userStore)
+// console.log(userStore)
 
 const [selectedPost,setselectedPost ] = useState(false);
 console.log(selectedPost)
-const commentClicked = (obj)=>{
+const [selectedIndex, setselectedIndex] = useState(null);
+const commentClicked = (obj,i)=>{
   // console.log(obj)
   setselectedPost(obj)
+  setselectedIndex(i)
   // showModal(true)
   setIsModalOpen(true)
 }
@@ -53,7 +55,7 @@ let res = await axios.get(`https://blogapp-anlu.onrender.com/posts/like/${postId
   }
 })
 let data = res.data;
-console.log(data)
+// console.log(data)
 getAllUserPost()
 }
 
@@ -62,7 +64,7 @@ const [commentValue, setcommentValue] = useState('');
 
 const handleChangeComment=(e)=>{
 let value = e.target.value;
-console.log(value)
+// console.log(value)
 setcommentValue(value)
 }
 
@@ -79,9 +81,12 @@ const handleAddComment = async() => {
 
  
   let data = res.data;
-  console.log(data)
+  // console.log(data)
   setcommentValue('');
   getAllUserPost()
+  setselectedPost(AllPost[selectedIndex])
+  
+  // console.log('ans=',AllPost[selectedIndex])
   if (!commentValue.trim()){
     alert('Please enter a comment');
   } return;
@@ -188,7 +193,7 @@ const [isModalOpen, setIsModalOpen] = useState(false);
  </div>
  <div className='mt-6'>
  <Button type="primary" >
- <span><LiaCommentsSolid onClick={()=>commentClicked(ele)} className='cursor-pointer'  size={30}/></span>
+ <span><LiaCommentsSolid onClick={()=>commentClicked(ele,i)} className='cursor-pointer'  size={30}/></span>
  {/* <p>Comments</p> */}
       </Button>
  

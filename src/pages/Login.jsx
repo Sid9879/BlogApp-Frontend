@@ -19,7 +19,7 @@ const Login = () => {
     }
     // console.log(obj)
     let res = await axios.post('https://blogapp-anlu.onrender.com/users/login',obj)
-    console.log(res.data)
+    // console.log(res.data)
     
     email:emailRef.current.value=""
     password:passwordRef.current.value=""

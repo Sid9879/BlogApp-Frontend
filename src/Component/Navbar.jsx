@@ -26,7 +26,7 @@ const Navbar = () => {
       const res = await axios.get(`https://blogapp-anlu.onrender.com/users/search?q=${value}`);
       setSearchUser(res.data.users || []);
     } catch (error) {
-      console.error("Error fetching search results:", error);
+      // console.error("Error fetching search results:", error);
     }
   };
 

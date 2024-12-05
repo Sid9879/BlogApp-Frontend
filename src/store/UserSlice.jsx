@@ -14,14 +14,14 @@ export const UserSlice = createSlice({
   initialState:initialState,
   reducers: {
    setState:(state,action)=>{
-console.log(action.payload)
+// console.log(action.payload)
 localStorage.setItem('blogsAuth',JSON.stringify({login:true,token:action.payload.token,user:''}))
 state.login = true;
 state.token = action.payload.token
    },
    updateUser:(state,action)=>{
 
-console.log(action.payload)
+// console.log(action.payload)
 localStorage.setItem('blogsAuth',JSON.stringify({login:true,user:action.payload.user,token:state.token}))
 state.user = action.payload.user
    },

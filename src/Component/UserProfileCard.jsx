@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
-// import { CiHeart } from "react-icons/ci";
 import { LiaCommentsSolid } from "react-icons/lia";
 import Slider from "react-slick";
 
