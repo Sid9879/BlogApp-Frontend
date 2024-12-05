@@ -167,10 +167,10 @@ const socketRef = useRef(null);
           <div className="flex items-center gap-5">
             <img
               className="w-10 h-10 rounded-full"
-              src={friend.profilePic}
+              src={friend?.profilePic}
               alt="Friend's Profile"
             />
-            <h2 className="text-lg font-semibold">{friend.name}</h2>
+            <h2 className="text-lg font-semibold">{friend?.name}</h2>
           </div>
           <button className="text-blue-500 text-sm hover:underline">Clear Chat</button>
         </div>
