@@ -75,61 +75,93 @@ const Profile = (props) => {
   });
   // console.log(userPics)
 
-  const handleCoverChanger = (e) => {
-    let file = e.target.files[0];
-    // console.log(file);
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
+  // const handleCoverChanger = (e) => {
+  //   let file = e.target.files[0];
+  //   // console.log(file);
+  //   let reader = new FileReader();
+  //   reader.readAsDataURL(file);
 
-    reader.onloadend = async () => {
-      // console.log(reader.result)
-      setuserPics({ ...userPics, coverPic: reader.result });
+  //   reader.onloadend = async () => {
+  //     // console.log(reader.result)
+  //     setuserPics({ ...userPics, coverPic: reader.result });
 
-      let res = await axios.put(
-        `https://blogapp-anlu.onrender.com/users/update/${userDetails._id}`,
-        { coverPic: reader.result },
-        { profilePic: reader.result }
-      );
+  //     let res = await axios.put(
+  //       `https://blogapp-anlu.onrender.com/users/update/${userDetails._id}`,
+  //       { coverPic: reader.result },
+  //       { profilePic: reader.result }
+  //     );
 
-      let data = res.data;
-      if (data.success) {
+  //     let data = res.data;
+  //     if (data.success) {
+  //       toast.success(res.data.msg, { position: "top-center", theme: "dark" });
+  //     } else {
+  //       toast.error(res.data.msg, { position: "top-center", theme: "dark" });
+  //     }
+  //   };
+
+  //   reader.onerror = () => {
+  //     // console.log(reader.error);
+  //   };
+  // };
+
+const handleCoverChanger = (e)=>{
+  let files = e.target.value[0];
+  let filesArr = [...files]
+  let formData = new FormData();
+  formData.append('upload_preset','BlogApp')
+  let res = axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,filesArr)
+  let data = res.data;
+       if (data.success) {
         toast.success(res.data.msg, { position: "top-center", theme: "dark" });
       } else {
         toast.error(res.data.msg, { position: "top-center", theme: "dark" });
-      }
+     }
     };
 
-    reader.onerror = () => {
-      // console.log(reader.error);
-    };
-  };
+}
 
-  const handleProfileChanger = (e) => {
-    let file = e.target.files[0];
-    // console.log(file);
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
+  // const handleProfileChanger = (e) => {
+  //   let file = e.target.files[0];
+  //   // console.log(file);
+  //   let reader = new FileReader();
+  //   reader.readAsDataURL(file);
 
-    reader.onloadend = async () => {
-      // console.log(reader.result);
-      setuserPics({ ...userPics, profilePic: reader.result });
+  //   reader.onloadend = async () => {
+  //     // console.log(reader.result);
+  //     setuserPics({ ...userPics, profilePic: reader.result });
 
-      let res = await axios.put(
-        `https://blogapp-anlu.onrender.com/users/update/${userDetails._id}`,
-        { profilePic: reader.result }
-      );
+  //     let res = await axios.put(
+  //       `https://blogapp-anlu.onrender.com/users/update/${userDetails._id}`,
+  //       { profilePic: reader.result }
+  //     );
 
-      let data = res.data;
-      if (data.success) {
-        toast.success(res.data.msg, { position: "top-center", theme: "dark" });
-      } else {
-        toast.error(res.data.msg, { position: "top-center", theme: "dark" });
-      }
-    };
-    reader.onerror = () => {
-      // console.log(reader.error);
-    };
-  };
+  //     let data = res.data;
+  //     if (data.success) {
+  //       toast.success(res.data.msg, { position: "top-center", theme: "dark" });
+  //     } else {
+  //       toast.error(res.data.msg, { position: "top-center", theme: "dark" });
+  //     }
+  //   };
+  //   reader.onerror = () => {
+  //     // console.log(reader.error);
+  //   };
+  // };
+
+const handleProfileChanger =()=>{
+  let files = e.target.files[0];
+  let formData = new FormData();
+  formData.append('upload_preset','BlogApp')
+  let res1 = axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,files)
+  let data = res1.data;
+  if(data.success){
+    toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
+
+  }
+  else{
+    toast.error(res1.data.msg, { position: "top-center", theme: "dark"})
+  }
+
+}
 
   //show total likes of user
   const [countLikes, setcountLikes] = useState("");
@@ -397,6 +429,6 @@ const Profile = (props) => {
       )}
     </div>
   );
-};
+
 
 export default Profile;
