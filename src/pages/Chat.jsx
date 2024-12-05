@@ -107,7 +107,7 @@ const socketRef = useRef(null);
 
 
 
-  const [arrivalMessage, setarrivalMessage] = useState(null);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   // console.log(arrivalMessage)
   
   useEffect(() => {
