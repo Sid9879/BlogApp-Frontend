@@ -8,8 +8,11 @@ import { io } from "socket.io-client";
 
 
 const Chat = () => {
-  const Endpoint = "https://blogapp-anlu.onrender.com"
-  let socket = io(Endpoint, { transports: ['websocket'] });
+  let url = import.meta.env.VITE_DevelopementMode === 'test' ? "http://localhost:8080" : 'https://blogapp-anlu.onrender.com';
+  const Endpoint = url;
+const socketRef = useRef(null);
+  // const Endpoint = "https://blogapp-anlu.onrender.com"
+  // let socket = io(Endpoint, { transports: ['websocket'] });
   // Accessing user data from Redux store
   const userStore = useSelector((state) => state.user);
   const token = userStore.token;
@@ -21,7 +24,7 @@ const Chat = () => {
 
   // State to manage chat messages and current message input
   const [allChat, setAllChat] = useState([]);
-  console.log(allChat)
+  // console.log(allChat)
   const [currentMessage, setCurrentMessage] = useState('');
 
   // const [showEmojiPicker, setShowEmojiPicker] = useState(false); // State to toggle emoji picker visibility
@@ -33,13 +36,16 @@ const Chat = () => {
   // Fetch chat messages
   async function getChat() {
     try {
-      const res = await axios.get(`https://blogapp-anlu.onrender.com/message/getMessage/${friend._id}`, {
+      const res = await axios.get(`${url}/message/getMessage/${friend._id}`, {
         headers: {
           Authorization: token,
         },
       });
-      const data = res.data;
-      setAllChat(data.chat); // Update chat messages
+      let data = res.data;
+      if (data.success) {
+        setAllChat(data.chat);
+      }
+   // Update chat messages
     } catch (error) {
       console.error('Error fetching chat messages:', error);
     }
@@ -66,14 +72,15 @@ const Chat = () => {
 
   // Handle sending a message
   const handleSendMessage = async () => {
-    socket.emit('sendMessage', {
+    socketRef.current.emit('sendMessage', {
       text: currentMessage,
       sender: user._id,
       reciever: friend._id
-    })
+    });
+
     try {
       const res = await axios.post(
-        `https://blogapp-anlu.onrender.com/message/send/${friend._id}`,
+        `${url}/message/send/${friend._id}`,
         { text: currentMessage },
         {
           headers: {
@@ -91,31 +98,33 @@ const Chat = () => {
     }
   };
   useEffect(() => {
-
-
-    if (user?._id) {
-      socket.emit('addUser', user._id)
+    if (user?._id && !socketRef.current?.connected) {
+      socketRef.current = io(Endpoint, { transports: ['websocket'] });
+      socketRef.current.emit('addUser', user._id);
     }
-  }, [Endpoint, user._id])
+  }, [user?._id]);
+
+
 
 
   const [arrivalMessage, setarrivalMessage] = useState(null);
-  console.log(arrivalMessage)
+  // console.log(arrivalMessage)
   
   useEffect(() => {
-    socket.on('getMessage', ({ sender, text }) => {
-      console.log(text)
-      console.log("allChat = ", allChat)
-      setarrivalMessage({ sender: sender, reciever: user._id, text: text, createdAt: Date.now() })
-      // setAllChat([...allChat,{sender:sender, reciever:user._id,text:text,createdAt:Date.now()}])
-    })
-  }, [handleSendMessage])
+    if (socketRef.current) {
+      socketRef.current.on('getMessage', ({ sender, text }) => {
+        console.log({ sender, text })
+        setArrivalMessage({ sender: sender, reciever: user._id, text: text, createdAt: Date.now() });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (arrivalMessage) {
-      setAllChat([...allChat, arrivalMessage])
+      setAllChat((prevChat) => [...prevChat, arrivalMessage]);
     }
-  }, [arrivalMessage])
+  }, [arrivalMessage]);
+
 
 
 
