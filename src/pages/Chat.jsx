@@ -202,7 +202,7 @@ const Chat = () => {
 
             {/* Emoji Picker Component */}
             {showEmojiPicker && (
-              <div className="absolute bottom-16 left-4 z-10 bg-white shadow-lg rounded-md">
+              <div className="absolute bottom-32 left-4 z-10 bg-white shadow-lg rounded-md ">
                 <EmojiPicker onEmojiClick={handleEmojiClick} /> {/* Add emoji to input field */}
               </div>
             )}
