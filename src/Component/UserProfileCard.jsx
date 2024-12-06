@@ -70,7 +70,7 @@ const UserProfileCard = (props) => {
     }
 
     const handleDeletePost =async(obj)=>{
-      console.log(obj)
+      // console.log(obj)
       let res = await axios.delete(`https://blogapp-anlu.onrender.com/posts/delete/${obj._id}`)
       if(res.data.success){
         UserPost()
@@ -102,7 +102,7 @@ const UserProfileCard = (props) => {
         toast.error("Failed to update post", { position: "top-center", theme: "dark" });
       }
     } catch (error) {
-      console.error("Error updating post:", error);
+      // console.error("Error updating post:", error);
       toast.error("An error occurred while updating the post", { position: "top-center", theme: "dark" });
     
     }
