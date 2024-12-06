@@ -187,18 +187,6 @@ const handleDeleteId = async()=>{
   console.log(data)
   if(data.success){
     dispatch(logout())
-//     login:details? details.login:false,
-// user:details?details.user:"",
-// token:details?details.token:""
-    // userStore:login.false;
-    // userStore:token:''
-    // localStorage.removeItem('blogsAuth');
-    // state.login = false;
-    // state.token = "";
-    // state.user = ""
-    // navigate('/login')
-    
-    // localStorage.clear();
     toast.success(data.msg, { position: "top-center", theme: "dark" });
   }
   else{
