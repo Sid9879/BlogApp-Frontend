@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa";
 import { LiaCommentsSolid } from "react-icons/lia";
 import Slider from "react-slick";
+import { toast } from "react-toastify";
+import { Button, Modal } from 'antd';
 
 // Slider settings
 const settings = {
@@ -23,6 +25,8 @@ const UserProfileCard = (props) => {
 
   const [getPosts, setUserPost] = useState([]);
   // console.log(getPosts)
+
+
 
 
   //show total likes of user
@@ -61,10 +65,61 @@ const UserProfileCard = (props) => {
       }
     })
     let data = res.data;
-    console.log(data)
+    // console.log(data)
     UserPost();
     }
 
+    const handleDeletePost =async(obj)=>{
+      console.log(obj)
+      let res = await axios.delete(`https://blogapp-anlu.onrender.com/posts/delete/${obj._id}`)
+      if(res.data.success){
+        UserPost()
+        toast.success(res.data.msg, { position: "top-center", theme: "dark" });
+      }
+    }
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPost, setcurrentPost] = useState(null);
+    // console.log(currentPost)
+    const [updatedDetails, setupdatedDetails] = useState({title:"",description:""});
+  const showModal = (post) => {
+    setcurrentPost(post);
+    setupdatedDetails({title:post.title,description:post.description})
+    setIsModalOpen(true);
+  };
+  const handleOk = async() => {
+    try {
+      const res2 = await axios.put(`https://blogapp-anlu.onrender.com/posts/update/${currentPost._id}`,updatedDetails,{
+        headers:{
+          Authorization:userStore.token
+        }
+      })
+      if (res2.data.success) {
+        toast.success("Post updated successfully!", { position: "top-center", theme: "dark" });
+        UserPost(); // Refresh posts after update
+        setIsModalOpen(false); // Close the modal
+      } else {
+        toast.error("Failed to update post", { position: "top-center", theme: "dark" });
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+      toast.error("An error occurred while updating the post", { position: "top-center", theme: "dark" });
+    
+    }
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setcurrentPost(null)
+  };
+
+    
+    
+const handleinputChanger = (e)=>{
+ const {name,value} = e.target;
+ setupdatedDetails((prev)=>({...prev,[name]:value}));
+
+}
   return (
     <div>
       <div className="grid gap-4 mx-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -138,7 +193,7 @@ const UserProfileCard = (props) => {
  </div>
 
               {/* Content Section */}
-              <div className="p-6">
+              <div className="p-6 ">
                 <div>
                   <span className="text-xs font-medium text-blue-600 uppercase dark:text-blue-400 truncate">
                     {ele.title}
@@ -147,11 +202,30 @@ const UserProfileCard = (props) => {
                     {ele.description}
                   </p>
                 </div>
+                <div className="flex justify-center gap-2 mt-2">
+                <button onClick={()=>handleDeletePost(ele)} className="w-28 rounded-md   h-8 bg-red-500">Delete</button>
+                <Button 
+  type="primary" 
+  className="bg-green-400 w-28 h-8" 
+  onClick={() => 
+    showModal(ele)}
+>
+  Update
+</Button>
+      <Modal  title="Update Your Post" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} getContainer={false}>
+      <div className="flex flex-col gap-2">
+      <input name="title"  onChange={handleinputChanger} className="bg-red-300 w-full h-8 px-2" type="text" value={updatedDetails.title} />
+      <input name="description" onChange={handleinputChanger} className="bg-red-300 w-full h-8 px-2" type="text" value={updatedDetails.description} />
+      </div>
+      </Modal>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
+
+      
     </div>
   );
 };

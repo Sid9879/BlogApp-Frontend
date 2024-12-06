@@ -210,8 +210,8 @@ const [isModalOpen, setIsModalOpen] = useState(false);
     <div className="mt-4">
       <div className="flex items-center gap-2">
         <div className="flex items-center ">
-          <img className=" bg-center h-10 w-10 rounded-full" src={ele.userId.profilePic} alt="Avatar" />
-          <a href="#" className="mx-2 font-semibold text-gray-700 dark:text-gray-200 " tabIndex={0} role="link">{ele.userId.name}</a>
+          <img className=" bg-center h-10 w-10 rounded-full" src={ele.userId?.profilePic} alt="Avatar" />
+          <a href="#" className="mx-2 font-semibold text-gray-700 dark:text-gray-200 " tabIndex={0} role="link">{ele.userId?.name}</a>
         </div> 
          <span className="mx-1  text-xs text-gray-600 dark:text-green-300 truncate 
 ">{formatDistanceToNow(ele.createdAt, { addSuffix: true })}</span>
@@ -257,9 +257,9 @@ const [isModalOpen, setIsModalOpen] = useState(false);
             >
               <div className=''>
                 <div className='flex gap-3  items-center'>
-                <img className='w-10 h-10 rounded-full' src={obj.user.profilePic} alt="" />
+                <img className='w-10 h-10 rounded-full' src={obj.user?.profilePic} alt="" />
                 
-                <p className="font-semibold text-gray-800">{obj.user.name}</p>
+                <p className="font-semibold text-gray-800">{obj.user?.name}</p>
                 </div>
                 <p className="text-gray-600">{obj.text}</p>
                 <span className="mx-1  text-xs text-gray-600 dark:text-green-300 truncate 

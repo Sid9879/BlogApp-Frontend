@@ -15,12 +15,12 @@ const FriendProfile = (props) => {
   let userStore = useSelector((state)=>state.user)
   // console.log(userStore)
   let orignalUser = userStore.user
-  console.log(orignalUser)
+  // console.log(orignalUser)
 
   let location = useLocation("");
-  console.log(location)
+  // console.log(location)
   let userId = location.state;
-  console.log(userId)
+  // console.log(userId)
 
   const [userDetails, setuserDetails] = useState();
 

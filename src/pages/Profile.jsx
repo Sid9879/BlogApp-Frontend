@@ -7,11 +7,16 @@ import { toast } from "react-toastify";
 import { FaCamera } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
 import { Button, Modal } from 'antd';
+import {Link, useNavigate} from "react-router-dom"
 import UserProfileCard from "../Component/UserProfileCard";
+import { logout } from "../store/UserSlice";
 
 const Profile = (props) => {
   let userStore = useSelector((state) => state.user);
   // console.log(userStore);
+
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   let followers = userStore.user.followers;
   // console.log(followers)
@@ -171,6 +176,37 @@ const handleProfileChanger =()=>{
     setcountLikes(ans);
   };
 
+const handleDeleteId = async()=>{
+  let res = await axios.delete(`https://blogapp-anlu.onrender.com/users/delete/${userStore.user._id}`,{
+    headers:{
+      Authorization:userStore.token
+    }
+  })
+  console.log(res)
+  let data = res.data;
+  console.log(data)
+  if(data.success){
+    dispatch(logout())
+//     login:details? details.login:false,
+// user:details?details.user:"",
+// token:details?details.token:""
+    // userStore:login.false;
+    // userStore:token:''
+    // localStorage.removeItem('blogsAuth');
+    // state.login = false;
+    // state.token = "";
+    // state.user = ""
+    // navigate('/login')
+    
+    // localStorage.clear();
+    toast.success(data.msg, { position: "top-center", theme: "dark" });
+  }
+  else{
+    toast.error(data.msg, { position: "top-center", theme: "dark" });
+  }
+
+}
+
 
   
 
@@ -193,7 +229,10 @@ const handleProfileChanger =()=>{
             </label>
             <input onChange={handleCoverChanger} hidden id="id" type="file" />
           </div>
+          
         </div>
+        <button onClick={handleDeleteId} className="w-2/12 h-8 justify-center flex items-center text-black bg-red-500 mt-3 rounded-lg absolute right-44 hover:no-underline hover:bg-sky-500 " >Delete Your Id</button>
+
         <img
           onClick={handleForm}
           className="absolute right-5 top-5 cursor-pointer"
