@@ -152,7 +152,7 @@ const handleCoverChanger = (e)=>{
   //   };
   // };
 
-const handleProfileChanger =()=>{
+const handleProfileChanger =(e)=>{
   let files = e.target.files[0];
   let formData = new FormData();
   formData.append('upload_preset','BlogApp')

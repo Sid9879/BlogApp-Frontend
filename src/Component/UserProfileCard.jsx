@@ -202,7 +202,7 @@ const handleinputChanger = (e)=>{
                     {ele.description}
                   </p>
                 </div>
-                <div className="flex justify-center gap-2 mt-2">
+                <div className="flex justify-center gap-2 mt-2 ">
                 <button onClick={()=>handleDeletePost(ele)} className="w-28 rounded-md   h-8 bg-red-500">Delete</button>
                 <Button 
   type="primary" 
