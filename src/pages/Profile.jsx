@@ -109,12 +109,12 @@ const Profile = (props) => {
   //   };
   // };
 
-const handleCoverChanger = (e)=>{
+const handleCoverChanger = async(e)=>{
   let files = e.target.value[0];
   let filesArr = [...files]
   let formData = new FormData();
   formData.append('upload_preset','BlogApp')
-  let res = axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,filesArr)
+  let res =await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,filesArr)
   let data = res.data;
        if (data.success) {
         toast.success(res.data.msg, { position: "top-center", theme: "dark" });
@@ -152,11 +152,11 @@ const handleCoverChanger = (e)=>{
   //   };
   // };
 
-const handleProfileChanger =(e)=>{
+const handleProfileChanger = async(e)=>{
   let files = e.target.files[0];
   let formData = new FormData();
   formData.append('upload_preset','BlogApp')
-  let res1 = axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,files)
+  let res1 = await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,files)
   let data = res1.data;
   if(data.success){
     toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
