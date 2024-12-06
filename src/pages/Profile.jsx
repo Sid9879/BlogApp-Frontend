@@ -78,7 +78,7 @@ const Profile = (props) => {
     coverPic: "",
     profilePic: "",
   });
-  // console.log(userPics)
+  console.log(userPics)
 
   // const handleCoverChanger = (e) => {
   //   let file = e.target.files[0];
@@ -110,13 +110,16 @@ const Profile = (props) => {
   // };
 
 const handleCoverChanger = async(e)=>{
-  let files = e.target.value[0];
-  let filesArr = [...files]
+  let file = e.target.files[0];
   let formData = new FormData();
+  formData.append('file',file)
   formData.append('upload_preset','BlogApp')
-  let res =await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,filesArr)
+  let res = await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,formData)
+  console.log(res)
   let data = res.data;
+  setuserPics({ ...userPics, coverPic:data.secure_url });
        if (data.success) {
+        
         toast.success(res.data.msg, { position: "top-center", theme: "dark" });
       } else {
         toast.error(res.data.msg, { position: "top-center", theme: "dark" });
@@ -153,11 +156,15 @@ const handleCoverChanger = async(e)=>{
   // };
 
 const handleProfileChanger = async(e)=>{
-  let files = e.target.files[0];
+  let file = e.target.files[0];
   let formData = new FormData();
+  formData.append('file',file)
   formData.append('upload_preset','BlogApp')
-  let res1 = await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,files)
+  let res1 = await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,formData)
+  console.log(res1.data)
   let data = res1.data;
+  setuserPics({ ...userPics, profilePic: data.secure_url });
+  
   if(data.success){
     toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
 
