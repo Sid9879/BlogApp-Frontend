@@ -5,6 +5,9 @@ import { useLocation } from 'react-router-dom';
 import { formatDistanceToNow } from'date-fns';
 import EmojiPicker from 'emoji-picker-react';
 import { io } from "socket.io-client";
+// import { theme } from 'antd';
+import { toast } from "react-toastify";
+
 
 
 const Chat = () => {
@@ -17,10 +20,12 @@ const socketRef = useRef(null);
   const userStore = useSelector((state) => state.user);
   const token = userStore.token;
   const user = userStore.user;
+  // console.log(user)
 
   // Accessing friend's data from location state
   const location = useLocation();
   const friend = location.state.friend;
+  // console.log(friend)
 
   // State to manage chat messages and current message input
   const [allChat, setAllChat] = useState([]);
@@ -66,7 +71,7 @@ const socketRef = useRef(null);
   // Handle input change
   const handleInputChanger = (e) => {
     let value = e.target.value
-    console.log(value)
+    // console.log(value)
     setCurrentMessage(value);
   };
 
@@ -133,6 +138,27 @@ const socketRef = useRef(null);
     setCurrentMessage((prevMessage) => prevMessage + emojiData.emoji); // Append the selected emoji to the existing text
   };
 
+const handleMessageDelete = async()=>{
+let res = await axios.delete(`https://blogapp-anlu.onrender.com/message/delete/${friend._id}`,{
+  headers:{
+    'Authorization':token
+  }
+})
+console.log(res.data)
+console.log("Friend ID:", friend._id); // Should be the correct ID
+console.log("Token:", token);
+let data = res.data;
+if(data.success){
+  getChat()
+  toast.success(res.data.msg,{position:"top-center",theme:"dark"})
+  // toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
+
+}
+else{
+  toast.error(res.data.msg,{position:"top-center",theme:"dark"})
+}
+}
+
   
   return (
    <div className=''>
@@ -172,7 +198,7 @@ const socketRef = useRef(null);
             />
             <h2 className="text-lg font-semibold">{friend?.name}</h2>
           </div>
-          <button className="text-blue-500 text-sm hover:underline">Clear Chat</button>
+          <button onClick={handleMessageDelete} className="text-blue-500 text-sm hover:underline">Clear Chat</button>
         </div>
 
         {/* Chat Messages */}
