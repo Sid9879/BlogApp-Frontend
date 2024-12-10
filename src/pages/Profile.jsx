@@ -117,13 +117,27 @@ const handleCoverChanger = async(e)=>{
   let res = await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,formData)
   console.log(res)
   let data = res.data;
-  setuserPics({ ...userPics, coverPic:data.secure_url });
-       if (data.success) {
-        
-        toast.success(res.data.msg, { position: "top-center", theme: "dark" });
-      } else {
-        toast.error(res.data.msg, { position: "top-center", theme: "dark" });
-     }
+ 
+
+  if(data){
+    let res1 = await axios.put(
+      `https://blogapp-anlu.onrender.com/users/update/${userDetails._id}`,
+      { coverPic: data.secure_url } // Save the image URL in the backend
+    );
+    console.log(res1)
+    if(res1.data.success){
+      props.getUserDetails();
+      // setuserPics({ ...userPics, profilePic: data.secure_url });
+      toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
+  
+    }
+    else{
+      toast.error(res1.data.msg, { position: "top-center", theme: "dark"})
+    }
+  
+  }
+
+
     };
 
 
@@ -161,18 +175,28 @@ const handleProfileChanger = async(e)=>{
   formData.append('file',file)
   formData.append('upload_preset','BlogApp')
   let res1 = await axios.put(`https://api.cloudinary.com/v1_1/dhsb9luqr/upload`,formData)
-  console.log(res1.data)
+  // console.log(res1.data)
   let data = res1.data;
-  setuserPics({ ...userPics, profilePic: data.secure_url });
+
+  if(data){
+    let res = await axios.put(
+      `https://blogapp-anlu.onrender.com/users/update/${userDetails._id}`,
+      { profilePic: data.secure_url } // Save the image URL in the backend
+    );
+    // console.log(res)
+    if(res.data.success){
+      props.getUserDetails();
+      // setuserPics({ ...userPics, profilePic: data.secure_url });
+      toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
   
-  if(data.success){
-    toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
-
+    }
+    else{
+      toast.error(res1.data.msg, { position: "top-center", theme: "dark"})
+    }
+  
   }
-  else{
-    toast.error(res1.data.msg, { position: "top-center", theme: "dark"})
-  }
-
+  
+ 
 }
 
   //show total likes of user
