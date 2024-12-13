@@ -118,7 +118,7 @@ const socketRef = useRef(null);
   useEffect(() => {
     if (socketRef.current) {
       socketRef.current.on('getMessage', ({ sender, text }) => {
-        console.log({ sender, text })
+        // console.log({ sender, text })
         setArrivalMessage({ sender: sender, reciever: user._id, text: text, createdAt: Date.now() });
       });
     }
@@ -178,7 +178,7 @@ let res = await axios.delete(`https://blogapp-anlu.onrender.com/msgDelete/${ele.
 
 })
 let data = res.data;
-console.log(res)
+// console.log(res)
 if(data.success){
   getChat()
 }
