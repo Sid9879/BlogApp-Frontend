@@ -184,7 +184,10 @@ let data = res.data;
 // console.log(res)
 if(data.success){
   getChat()
-
+  toast.success(res.data.msg,{position:"top-center",theme:"dark"})
+}
+else{
+  toast.error(res.data.msg,{position:"top-center",theme:"dark"})
 }
 setShowDelete(false)
   }
