@@ -143,21 +143,48 @@ let res = await axios.delete(`https://blogapp-anlu.onrender.com/message/delete/$
   headers:{
     'Authorization':token
   }
+
 })
 console.log(res.data)
-console.log("Friend ID:", friend._id); // Should be the correct ID
-console.log("Token:", token);
 let data = res.data;
 if(data.success){
-  getChat()
   toast.success(res.data.msg,{position:"top-center",theme:"dark"})
-  // toast.success(res1.data.msg, { position: "top-center", theme: "dark" });
+  setAllChat([])
 
 }
 else{
   toast.error(res.data.msg,{position:"top-center",theme:"dark"})
 }
 }
+const [showDelete, setShowDelete] = useState(false); // State to track visibility
+
+  // Show the delete button when clicking on the text
+  const handleTextClick = (e) => {
+    e.stopPropagation(); // Prevent click event from propagating
+    setShowDelete(true); // Show delete button
+  };
+
+  // Hide the delete button when clicking anywhere else
+  const handleHideButton = () => {
+    setShowDelete(false);
+  };
+
+  const handleDelete =async(ele)=>{
+console.log(ele)
+let res = await axios.delete(`http://localhost:8080/message/msgDelete/${ele._id}/${ele.receiver}`,{
+  headers:{
+    'Authorization':token
+  }
+
+})
+let data = res.data;
+console.log(res)
+if(data.success){
+  getChat()
+}
+setShowDelete(false)
+  }
+
 
   
   return (
@@ -206,9 +233,20 @@ else{
           {allChat.map((ele, i) =>
             ele.sender === user._id ? (
               <div key={i} className="flex items-start justify-end">
-                <div className="bg-blue-500 text-white rounded-lg p-3 max-w-xs">
+                <div onClick={handleHideButton} className="bg-blue-500 text-white rounded-lg p-3 max-w-xs relative">
                   <p className="font-medium">You</p>
-                  <p className="text-sm">{ele.text}</p>
+                  <p onClick={handleTextClick} className="text-sm cursor-pointer">{ele.text}</p>
+                  {showDelete && (
+        <button
+          className="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 text-xs rounded hover:bg-red-600"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent event propagation
+            handleDelete(ele); // Call delete handler
+          }}
+        >
+          Delete
+        </button>
+      )}
                   <span className="text-xs text-green-300">{formatDistanceToNow(ele.createdAt, { addSuffix: true })}</span>
                 </div>
               </div>
