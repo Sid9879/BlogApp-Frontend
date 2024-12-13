@@ -96,7 +96,8 @@ const socketRef = useRef(null);
       const data = res.data;
       if (data.success) {
         getChat(); // Refresh messages after sending
-        setCurrentMessage(''); // Clear input
+        setCurrentMessage('');
+        recentChats() // Clear input
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -150,6 +151,8 @@ let data = res.data;
 if(data.success){
   toast.success(res.data.msg,{position:"top-center",theme:"dark"})
   setAllChat([])
+  recentChats()
+
 
 }
 else{
@@ -199,7 +202,7 @@ async function recentChats(){
     // console.log(res)
     let data = res.data;
     setfetchChat(data.conversations)
-    // console.log(data)
+   
   } catch (error) {
     
   }
