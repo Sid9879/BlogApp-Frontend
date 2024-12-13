@@ -16,6 +16,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Profile from './pages/Profile'
 import FriendProfile from './pages/FriendProfile'
 import Chat from './pages/Chat'
+import PageNotFound from './pages/PageNotFound'
 
 
 
@@ -59,6 +60,7 @@ useEffect(()=>{
         
         <Route path = "/FriendProfile" element = {login===true?<FriendProfile getUserDetails={getUserDetails}  />:<Navigate to = {'/'}/> }/>
         <Route path = "/chat" element = {login===true?<Chat   />:<Navigate to = {'/'}/> }/>
+        <Route path = "/*" element = {login===true?<PageNotFound/>:<Navigate to ={'/login'}/>}/>
         
        </Routes>
        
