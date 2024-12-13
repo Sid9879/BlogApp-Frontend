@@ -194,7 +194,7 @@ setShowDelete(false)
  
 async function recentChats(){
   try {
-    let res = await axios.get(`http://localhost:8080/message/chat`,{
+    let res = await axios.get(`https://blogapp-anlu.onrender.com/message/chat`,{
       headers:{
         'Authorization':token
       }
