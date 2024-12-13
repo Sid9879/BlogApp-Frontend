@@ -183,14 +183,16 @@ let res = await axios.delete(`https://blogapp-anlu.onrender.com/message/msgDelet
 let data = res.data;
 // console.log(res)
 if(data.success){
-  getChat()
   toast.success(res.data.msg,{position:"top-center",theme:"dark"})
+  getChat()
 }
 else{
   toast.error(res.data.msg,{position:"top-center",theme:"dark"})
 }
 setShowDelete(false)
   }
+
+
 
   const [fetchChat, setfetchChat] = useState([]);
   console.log(fetchChat)
