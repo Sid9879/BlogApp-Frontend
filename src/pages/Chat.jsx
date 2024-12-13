@@ -174,7 +174,7 @@ const [showDelete, setShowDelete] = useState(false); // State to track visibilit
 
   const handleDelete =async(ele)=>{
 console.log(ele)
-let res = await axios.delete(`https://blogapp-anlu.onrender.com/msgDelete/${ele._id}/${ele.receiver}`,{
+let res = await axios.delete(`https://blogapp-anlu.onrender.com/message/msgDelete/${ele._id}/${ele.receiver}`,{
   headers:{
     'Authorization':token
   }
@@ -184,6 +184,7 @@ let data = res.data;
 // console.log(res)
 if(data.success){
   getChat()
+
 }
 setShowDelete(false)
   }
