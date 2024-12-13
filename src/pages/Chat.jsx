@@ -185,7 +185,30 @@ if(data.success){
 setShowDelete(false)
   }
 
+  const [fetchChat, setfetchChat] = useState([]);
+  console.log(fetchChat)
 
+ 
+async function recentChats(){
+  try {
+    let res = await axios.get(`http://localhost:8080/message/chat`,{
+      headers:{
+        'Authorization':token
+      }
+    })
+    // console.log(res)
+    let data = res.data;
+    setfetchChat(data.conversations)
+    // console.log(data)
+  } catch (error) {
+    
+  }
+}
+
+useEffect(()=>{
+  recentChats()
+},[])
+// recentChats()
   
   return (
    <div className=''>
@@ -194,22 +217,28 @@ setShowDelete(false)
       <div className="hidden md:block w-1/4 bg-cyan-300 shadow-md overflow-y-auto">
         <h2 className="text-lg font-semibold p-4 border-b border-gray-200">Recent Chats</h2>
         <ul>
-          <li className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
+        {fetchChat.map((ele,index)=>(
+          ele.members.map((obj)=>{
+          return <li key={obj._id} className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
             <img
               className="w-10 h-10 rounded-full object-cover"
-              src="https://via.placeholder.com/40"
+              src={obj.profilePic}
               alt="User Profile"
             />
-            <span className="font-medium text-gray-700">User 1</span>
+            <span className="font-medium text-gray-700">{obj.name}</span>
           </li>
-          <li className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
+          })
+          
+        ))}
+         
+          {/* <li className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 cursor-pointer">
             <img
               className="w-10 h-10 rounded-full object-cover"
               src="https://via.placeholder.com/40"
               alt="User Profile"
             />
             <span className="font-medium text-gray-700">User 2</span>
-          </li>
+          </li> */}
         </ul>
       </div>
 
