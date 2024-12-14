@@ -17,6 +17,7 @@ import Profile from './pages/Profile'
 import FriendProfile from './pages/FriendProfile'
 import Chat from './pages/Chat'
 import PageNotFound from './pages/PageNotFound'
+// import FriendComponent from './FriendComponent'
 
 
 
@@ -63,7 +64,7 @@ useEffect(()=>{
         <Route path = "/*" element = {login===true?<PageNotFound/>:<Navigate to ={'/login'}/>}/>
         
        </Routes>
-       
+       {/* <FriendComponent/> */}
        <ToastContainer/>
        </BrowserRouter>
     </>
